@@ -18,10 +18,10 @@ $$
 \noindent \textbf{Exercise 2.4}. Write down rules which express the "parallel" evaluation of $b_0$ and $b_1$ in $b_0 \lor b_1$ so that $b_0 \lor b_1$ evaluates to true if either $b_0$ evaluates to true, and $b_1$ is unevaluated, or $b_1$ evaluates to true, and $b_0$ is unevaluated.
 
 $$
-\langle b_0, \sigma \rangle \Downarrow true \over \langle b_0 \lor b_1, \sigma> \Downarrow true
+\langle b_0, \sigma \rangle \Downarrow true \over \langle b_0 \lor b_1, \sigma \rangle \Downarrow true
 $$
 $$
-\langle b_1, \sigma \rangle \Downarrow true \over \langle b_0 \lor b_1, \sigma> \Downarrow true
+\langle b_1, \sigma \rangle \Downarrow true \over \langle b_0 \lor b_1, \sigma \rangle \Downarrow true
 $$
 
 \noindent \textbf{Exercise 2.7}. Let $w \equiv while~true~do~skip$. By considering the form of derivations,
