@@ -1,0 +1,47 @@
+\documentclass{article}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\begin{document}
+  \newcommand{\N}{\mathbb{N}}
+
+  \noindent \textbf{Exercise 3.1.} Prove by mathematical induction that the following property $P$ holds for all natural numbers.
+  $$
+  P(n) \iff \Sigma^n_{i = 1} (2i - 1) = n^2
+  $$
+  \noindent (The notation $\Sigma^l_{i = k} s_i$ abbreviates $s_k + s_{k + 1} + s_{k + 2} + ... + s_l$ when $k, l$ are integers with $k < l$).
+
+  \bigskip
+  \noindent We proceed by mathematical induction on $n$.
+
+  \bigskip
+  \noindent \textbf{Base Case} $P(1)$.
+
+  \medskip
+  \noindent We chose $P(1)$ as the base case. $P(0)$ is vacuously true; $i$ begins at 1, so $\Sigma^0_{i = 1}(2i - 1)$ is not defined.
+
+  \begin{align*}
+    P(1) &\iff \Sigma^1_{i = 1}(2i - 1) = 1^2 \\
+    &\iff (2(1) - 1) = 1^2 \\
+    &\iff 1 = 1
+  \end{align*}
+
+  \bigskip
+  \noindent \textbf{Inductive Case}
+
+  \medskip
+  \noindent Assume the proposition $P$ holds for an arbitrary natural number $m$. We need to show that the proposition $P(m + 1)$ also holds.
+
+  \begin{align*}
+    P(m + 1) &\iff \Sigma^{m + 1}_{i = 1}(2i - 1) = (m + 1)^2 \\
+    &\iff \Sigma^{m}_{i = 1}(2i - 1) + (2(m + 1) - 1) = (m + 1)^2 \\
+    &\iff m^2 + 2m + 2 - 1 = (m + 1)^2 \\
+    &\iff m^2 + 2m + 1 = m^2 + 2m + 1 \\
+  \end{align*}
+
+  \noindent Thus: $\forall m \in \N, P(m) \implies P(m + 1)$
+  
+  \bigskip
+  \noindent We've proven the base case and the inductive case, completing the proof. QED
+\end{document}
