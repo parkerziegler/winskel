@@ -1,0 +1,177 @@
+\documentclass{article}
+
+\begin{document}
+\noindent \textbf{Exercise 2.3}. Write down rules to evaluate boolean expressions of the form $b_0 \lor b_1$, which take advantage of the fact that there is no need to evaluate b in $true \lor b$ as the result will be true independent of the result of evaluating b. The rules written down should describe a method of left-sequential evaluation. Of course, by symmetry, there is a method of right-sequential evaluation.
+
+$$
+\langle b_0, \sigma \rangle \Downarrow true \over \langle b_0 \lor b_1, \sigma \rangle \Downarrow true \\
+$$
+$$
+\langle b_0, \sigma \rangle \Downarrow false \hspace{5mm} \langle b_ 1 \sigma \rangle \Downarrow true \over
+\langle b_0 \lor b_1 \rangle \Downarrow true
+$$
+$$
+\langle b_0, \sigma \rangle \Downarrow false \hspace{5mm} \langle b_ 1 \sigma \rangle \Downarrow false \over
+\langle b_0 \lor b_1 \rangle \Downarrow false
+$$
+
+\noindent \textbf{Exercise 2.4}. Write down rules which express the "parallel" evaluation of $b_0$ and $b_1$ in $b_0 \lor b_1$ so that $b_0 \lor b_1$ evaluates to true if either $b_0$ evaluates to true, and $b_1$ is unevaluated, or $b_1$ evaluates to true, and $b_0$ is unevaluated.
+
+$$
+\langle b_0, \sigma \rangle \Downarrow true \over \langle b_0 \lor b_1, \sigma> \Downarrow true
+$$
+$$
+\langle b_1, \sigma \rangle \Downarrow true \over \langle b_0 \lor b_1, \sigma> \Downarrow true
+$$
+
+\noindent \textbf{Exercise 2.7}. Let $w \equiv while~true~do~skip$. By considering the form of derivations,
+explain why, for any state $\sigma$, there is no state $\sigma'$ such that $\langle w, \sigma \rangle \Downarrow \sigma'$.
+
+\bigskip
+\noindent Based on the structure of $w$, we know that a derivation tree for $w$ would apply the $while$ rule last in order to complete the derivation. Specifically, the tree would apply the rule in which the loop guard $b$ evaluates to true. This derivation tree would have the following shape:
+
+$$
+\langle b, \sigma \rangle \Downarrow true \hspace{5mm} \langle skip, \sigma \rangle \Downarrow \sigma'' \hspace{5mm} \langle while~true~do~skip, \sigma'' \rangle \Downarrow \sigma' \over \langle while~true~do~skip, \sigma \rangle \Downarrow \sigma'
+$$
+
+From this derivation, we can see that our structure $w$ is recursive; every application of the $while$ rule to $w$ will just yield $w$ again. Thus, there is no complete, terminating derivation of $w$, proving that $\langle w, \sigma \rangle$ will never evaluate to state $\sigma'$.
+
+\bigskip
+\noindent\textbf{Exercise 2.9}. Complete the task, begun above, of writing down the rules for $\rightarrow_1$, one step in the evaluation of integer and boolean expressions. What evaluation strategy have you adopted (left-to-right sequential or ...)?
+
+\bigskip
+
+\begin{minipage}[t]{0.45\textwidth}
+  \textbf{Subtraction}
+  $$
+  \langle a_0, \sigma \rangle \Downarrow \langle a_0', \sigma \rangle \over
+  \langle a_0 - a_1, \sigma \rangle \Downarrow \langle a_0' - a_1, \sigma \rangle
+  $$
+  
+  $$
+  \langle a_1, \sigma \rangle \Downarrow \langle a_1', \sigma \rangle \over
+  \langle n - a_1, \sigma \rangle \Downarrow \langle n - a_1', \sigma \rangle
+  $$
+  
+  $$
+  \langle n - m, \sigma \rangle \Downarrow \langle p, \sigma \rangle
+  $$
+\end{minipage}
+\begin{minipage}[t]{0.45\textwidth}
+  \textbf{Multiplication}
+  $$
+  \langle a_0, \sigma \rangle \Downarrow \langle a_0', \sigma \rangle \over
+  \langle a_0 \times a_1, \sigma \rangle \Downarrow \langle a_0' \times a_1, \sigma \rangle
+  $$
+  
+  $$
+  \langle a_1, \sigma \rangle \Downarrow \langle a_1', \sigma \rangle \over
+  \langle n \times a_1, \sigma \rangle \Downarrow \langle n \times a_1', \sigma \rangle
+  $$
+  
+  $$
+  \langle n \times m, \sigma \rangle \Downarrow \langle p, \sigma \rangle
+  $$
+\end{minipage}
+
+\bigskip
+
+\begin{minipage}[t]{0.9\textwidth}
+  \textbf{Equal}
+  $$
+  \langle a_0, \sigma \rangle \Downarrow \langle a_0', \sigma \rangle \over
+  \langle a_0 = a_1, \sigma \rangle \Downarrow \langle a_0' = a_1, \sigma \rangle
+  $$
+  
+  $$
+  \langle a_1, \sigma \rangle \Downarrow \langle a_1', \sigma \rangle \over
+  \langle n = a_1, \sigma \rangle \Downarrow \langle n = a_1', \sigma \rangle
+  $$
+  
+  \centering
+  $
+  \langle n = m, \sigma \rangle \Downarrow \langle true, \sigma \rangle 
+  $ \hspace{5mm} if n and m are equal
+
+  \centering
+  $
+  \langle n = m, \sigma \rangle \Downarrow \langle false, \sigma \rangle 
+  $ \hspace{5mm} if n and m are not equal
+\end{minipage}
+
+\bigskip
+
+\begin{minipage}[t]{0.9\textwidth}
+  \textbf{Leq}
+  $$
+  \langle a_0, \sigma \rangle \Downarrow \langle a_0', \sigma \rangle \over
+  \langle a_0 \leq a_1, \sigma \rangle \Downarrow \langle a_0' \leq a_1, \sigma \rangle
+  $$
+  
+  $$
+  \langle a_1, \sigma \rangle \Downarrow \langle a_1', \sigma \rangle \over
+  \langle n \leq a_1, \sigma \rangle \Downarrow \langle n \leq a_1', \sigma \rangle
+  $$
+  
+  \centering
+  $
+  \langle n \leq m, \sigma \rangle \Downarrow \langle true, \sigma \rangle
+  $ \hspace{5mm} if n is less than or equal to m
+
+  \centering
+  $
+  \langle n \leq m, \sigma \rangle \Downarrow \langle false, \sigma \rangle 
+  $ \hspace{5mm} if n is greater than m
+\end{minipage}
+
+\bigskip
+
+\begin{minipage}[t]{0.9\textwidth}
+  \textbf{And}
+  $$
+  \langle b_0, \sigma \rangle \Downarrow \langle b_0', \sigma \rangle \over
+  \langle b_0 \land b_1, \sigma \rangle \Downarrow \langle b_0' \land b_1, \sigma \rangle
+  $$
+  
+  $$
+  \langle b_1, \sigma \rangle \Downarrow \langle b_1', \sigma \rangle \over
+  \langle n \land b_1, \sigma \rangle \Downarrow \langle n \land b_1', \sigma \rangle
+  $$
+  
+  \centering
+  $
+  \langle n \land m, \sigma \rangle \Downarrow \langle true, \sigma \rangle
+  $ \hspace{5mm} if n and m are both true
+
+  \centering
+  $
+  \langle n \land m, \sigma \rangle \Downarrow \langle false, \sigma \rangle
+  $ \hspace{5mm} if n or m is false
+\end{minipage}
+
+\bigskip
+
+\begin{minipage}[t]{0.9\textwidth}
+  \textbf{Or}
+  $$
+  \langle b_0, \sigma \rangle \Downarrow \langle b_0', \sigma \rangle \over
+  \langle b_0 \lor b_1, \sigma \rangle \Downarrow \langle b_0' \lor b_1, \sigma \rangle
+  $$
+  
+  $$
+  \langle b_1, \sigma \rangle \Downarrow \langle b_1', \sigma \rangle \over
+  \langle n \lor b_1, \sigma \rangle \Downarrow \langle n \lor b_1', \sigma \rangle
+  $$
+  
+  \centering
+  $
+  \langle n \lor m, \sigma \rangle \Downarrow \langle true, \sigma \rangle
+  $ \hspace{5mm} if n or m is true
+
+  \centering
+  $
+  \langle n \lor m, \sigma \rangle \Downarrow \langle false, \sigma \rangle
+  $ \hspace{5mm} if n and m are both false
+\end{minipage}
+
+\end{document}
