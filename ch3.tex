@@ -16,10 +16,10 @@
   \noindent We proceed by mathematical induction on $n$.
 
   \bigskip
-  \noindent \textbf{Base Case} $P(1)$.
+  \noindent \textbf{Base Case}
 
   \medskip
-  \noindent We chose $P(1)$ as the base case. $P(0)$ is vacuously true; $i$ begins at 1, so $\Sigma^0_{i = 1}(2i - 1)$ is not defined.
+  \noindent We choose $P(1)$ as the base case. $P(0)$ is vacuously true; $i$ begins at 1, so $\Sigma^0_{i = 1}(2i - 1)$ is not defined.
 
   \begin{align*}
     P(1) &\iff \Sigma^1_{i = 1}(2i - 1) = 1^2 \\
@@ -40,8 +40,86 @@
     &\iff m^2 + 2m + 1 = m^2 + 2m + 1 \\
   \end{align*}
 
-  \noindent Thus: $\forall m \in \N, P(m) \implies P(m + 1)$
+  \noindent Thus: $\forall m \in \N, P(m) \implies P(m + 1)$. We've proven the base case and the inductive case, completing the proof. QED
+
+  \bigskip
+  \noindent \textbf{Exercise 3.2} A string is a sequence of symbols. A string $a_1a_2...a_n$ with $n$ positions occupied by symbols is said to have length $n$. A string can be empty in which case it is said to have length 0. Two strings $s$ and $t$ can be concatenated to form the string $st$. Use mathematical induction to show there is no string $u$ which satisfies $au = ub$ for two distinct symbols $a$ and $b$.
+
+  \bigskip
+  \noindent We proceed by mathematical induction on the length of $u$.
+
+  \bigskip
+  \noindent \textbf{Base Case}
+
+  \medskip
+  \noindent For the base case, we choose $u$ to be the empty string, which has length 0 by definition. Therefore:
+  
+  $$
+  au = a, ub = b
+  $$
+  
+  \medskip
+  \noindent Since $a$ and $b$ are two distinct strings by definition ($a \neq b$), we can apply the transitive property to derive the following:
+
+  $$
+  au = a \neq b = ub \implies au \neq ub
+  $$
+
+  \bigskip
+  \noindent \textbf{Inductive Case}
+
+  \medskip
+  \noindent For the inductive case, we need to show that, given an arbitrary string $u$ of arbitrary length $n$ satisfying $au \neq ub$, $au' \neq u'b$ holds with an arbitrary string $u'$ of length $n + 1$. This is the inductive hypothesis.
+
+  \medskip
+  \noindent Assume we make a single character addition to $u$ to produce $u'$ with length $n + 1$. Then we have that $au \neq au'$ and $ub \neq u'b$, because $u$ and $u'$ have different lengths by definition and therefore cannot be concatenated to produce the original strings $au$ and $ub$. Applying our inductive hypothesis and the transitive property, we can then derive the following:
+
+  $$
+  au' \neq au \neq ub \neq u'b \implies au' \neq u'b
+  $$
+
+  \medskip
+  \noindent We've proven the base case and the inductive case, completing the proof. QED
   
   \bigskip
-  \noindent We've proven the base case and the inductive case, completing the proof. QED
+  \noindent \textbf{Exercise 3.4} Prove by structural induction that the evaluation of arithmetic expressions always terminates, i.e., for all arithmetic expression $a$ and states $\sigma$ there is some $m$ such that $\langle a, \sigma \rangle \Downarrow m$.
+
+  \medskip
+  \noindent We proceed by structural induction on cases of arithmetic expressions \textbf{AExp}.
+
+  \medskip
+  \noindent \textbf{Numeric literals $m$}. If $a$ is a numeric literal $m$, the only rule for its evaluation is $\langle a, \sigma \rangle \Downarrow m$. Thus, we've shown that $\langle a, \sigma \rangle \Downarrow m$ exists for this case.
+
+  \medskip
+  \noindent \textbf{Addition $a_0 + a_1$}. If $a$ is an addition expression, then its evaluation matches the structure of the following rule:
+
+  $$
+  \frac{\langle a_0, \sigma \rangle \Downarrow m_0 \hspace{5mm} \langle a_1, \sigma \rangle \Downarrow m_1}{\langle a_0 + a_1, \sigma \rangle \Downarrow m}
+  $$
+
+  \noindent By the induction hypothesis applied to $a_0$ and $a_1$ we obtain the numbers $m_0$ and $m_1$, which together sum to the number $m$.
+
+  \medskip
+  \noindent \textbf{Subtraction $a_0 - a_1$}. If $a$ is a subtraction expression, then its evaluation matches the structure of the following rule:
+
+  $$
+  \frac{\langle a_0, \sigma \rangle \Downarrow m_0 \hspace{5mm} \langle a_1, \sigma \rangle \Downarrow m_1}{\langle a_0 - a_1, \sigma \rangle \Downarrow m}
+  $$
+
+  \noindent By the induction hypothesis applied to $a_0$ and $a_1$ we obtain the numbers $m_0$ and $m_1$, whose difference is the number $m$.
+
+  \medskip
+  \noindent \textbf{Multiplication $a_0 \times a_1$}. If $a$ is a multiplication expression, then its evaluation matches the structure of the following rule:
+
+  $$
+  \frac{\langle a_0, \sigma \rangle \Downarrow m_0 \hspace{5mm} \langle a_1, \sigma \rangle \Downarrow m_1}{\langle a_0 \times a_1, \sigma \rangle \Downarrow m}
+  $$
+
+  \noindent By the induction hypothesis applied to $a_0$ and $a_1$ we obtain the numbers $m_0$ and $m_1$, whose product is the number $m$.
+  
+  This completes all cases $a \in \textbf{AExp}$ and proves that:
+
+  $$
+  \forall a \in A. \exists m~|~\langle a, \sigma \rangle \Downarrow m
+  $$
 \end{document}
